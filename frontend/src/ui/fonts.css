@@ -1,0 +1,22 @@
+/* Self-hosted fonts (latin subset). Unbounded for display, IBM Plex for
+   reading and data: an engineering family for an engineer's portfolio. */
+@font-face {
+  font-family: 'Unbounded Variable';
+  font-style: normal; font-weight: 200 900; font-display: swap;
+  src: url('@fontsource-variable/unbounded/files/unbounded-latin-wght-normal.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url('@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal; font-weight: 600; font-display: swap;
+  src: url('@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal; font-weight: 400 500; font-display: swap;
+  src: url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+}

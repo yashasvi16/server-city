@@ -1,0 +1,28 @@
+# Render Blueprint for the Go backend (free plan, no card).
+# Render: New → Blueprint → pick this repo. The website itself is hosted on
+# Cloudflare Pages; see deploy/DEPLOY.md.
+services:
+  - type: web
+    name: yashasvi-city-api
+    runtime: go
+    plan: free
+    region: singapore # closest Render region to India
+    rootDir: backend
+    buildCommand: go build -trimpath -ldflags "-s -w" -o app ./cmd/server
+    startCommand: ./app
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: ADDR
+        value: ":10000"
+      # The free plan's disk is wiped on restart and spin-down, so the
+      # guestbook and leaderboard last as long as the instance does.
+      - key: DATA_DIR
+        value: /tmp/server-city
+      - key: ALLOWED_ORIGINS
+        value: https://yashasvi-rathore.pages.dev,https://yashasvi.is-a.dev
+      # Render appends its own proxy hop after the visitor's address.
+      - key: CLIENT_IP_HEADER
+        value: "X-Forwarded-For:1"
+      - key: RUN_SECRET
+        generateValue: true

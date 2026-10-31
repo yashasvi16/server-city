@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>%NAME%, backend engineer</title>
+    <meta name="description" content="%DESCRIPTION%" />
+    <meta name="theme-color" content="#070a1f" />
+    <link rel="stylesheet" href="/src/ui/fonts.css" />
+    <link rel="stylesheet" href="/src/ui/experience.css" />
+    <link rel="stylesheet" href="/src/resume/resume.css" />
+  </head>
+  <body>
+    <div id="city-view">
+      <div id="stage" aria-hidden="true"></div>
+      <div id="labels" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <a class="mark" href="#top" aria-label="Back to the start">%NAME%</a>
+        <div class="topbar-right">
+          <p class="presence" id="presence" hidden></p>
+          <button class="ghost-btn" id="explore-toggle" type="button" hidden>Explore freely</button>
+          <a class="resume-btn" href="%RESUME_HREF%">Skip to plain resume</a>
+        </div>
+      </header>
+
+      <main id="tour" tabindex="-1"></main>
+
+      <aside id="sheet" class="sheet" aria-labelledby="sheet-title" hidden></aside>
+      <div id="live" class="sr-only" aria-live="polite"></div>
+
+      <div id="loader" class="loader" role="status" aria-live="polite">
+        <div class="loader-inner">
+          <p class="loader-name">%NAME%</p>
+          <ol id="boot-log" class="boot-log"></ol>
+          <div class="loader-bar"><span id="loader-fill"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <noscript>
+      <p class="noscript">This portfolio's 3D city needs JavaScript. <a href="./resume.html">Read the plain resume instead</a>.</p>
+    </noscript>
+
+    <!--RESUME-->
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

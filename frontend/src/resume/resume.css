@@ -1,0 +1,67 @@
+/* Plain resume: fast, printable, accessible. Shares the blueprint palette.
+   Variables are scoped to .resume, not :root, so they never leak into the
+   city UI loaded on the same page (e.g. the dark-mode --ink would turn the
+   "Skip to plain resume" button's text white on white). */
+.resume {
+  --paper: #eef1f8;
+  --ink: #1b2244;
+  --muted: #4a5378;
+  --rule: #c9d0e4;
+  --amber: #a8620a;
+  --link: #2a45b8;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  .resume:not([data-theme='light']) {
+    --paper: #0b0e26;
+    --ink: #f4efe6;
+    --muted: #a9b1d1;
+    --rule: #323a66;
+    --amber: #f2a33a;
+    --link: #9fb2ff;
+  }
+}
+/* Everything is scoped under .resume so the single-file build can embed it next to the city UI. */
+.resume {
+  min-height: 100vh;
+  & * { box-sizing: border-box; }
+  & {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 1.0625rem/1.65 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  a { color: var(--link); text-underline-offset: 2px; }
+  a:focus-visible, summary:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 2px; }
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { left: 1rem; top: 1rem; background: var(--paper); padding: .5rem .75rem; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .masthead, main, .foot { max-width: 46rem; margin: 0 auto; padding: 0 1rem; }
+  .masthead { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding-top: 2.5rem; flex-wrap: wrap; }
+  h1 { font: 700 2.1rem/1.08 'Unbounded Variable', 'Arial Black', sans-serif; margin: 0; letter-spacing: -0.03em; }
+  .role { margin: .25rem 0 0; font-size: 1.125rem; }
+  .meta { color: var(--muted); margin: .25rem 0; }
+  .contact a { margin-right: .9rem; }
+  .tocity {
+    display: inline-block; padding: .55rem .9rem; border: 2px solid var(--ink); border-radius: 6px;
+    color: var(--ink); text-decoration: none; font-weight: 700; white-space: nowrap;
+  }
+  .tocity:hover { background: var(--ink); color: var(--paper); }
+  h2 { font-family: 'Unbounded Variable', 'Arial Black', sans-serif; font-weight: 600; letter-spacing: -0.01em; font-size: 1.15rem; margin: 2.5rem 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid var(--ink); }
+  h3 { font-size: 1.125rem; margin: 1.75rem 0 .1rem; }
+  h4 { font-size: 1rem; margin: 1rem 0 .25rem; }
+  .tagline { margin: 0; color: var(--muted); }
+  .stack { margin: .35rem 0; font: 500 .88rem/1.5 'IBM Plex Mono', ui-monospace, monospace; color: var(--amber); }
+  .links a { margin-right: .9rem; }
+  ul { padding-left: 1.2rem; }
+  li { margin: .2rem 0; }
+  details { margin-top: .5rem; border-left: 3px solid var(--rule); padding-left: .9rem; }
+  summary { cursor: pointer; font-weight: 700; }
+  .foot { color: var(--muted); font-size: .9rem; padding-top: 2rem; padding-bottom: 3rem; }
+}
+@media print {
+  .tocity, .skip, .foot { display: none; }
+  details { border: 0; padding: 0; }
+  details > summary { display: none; }
+  .resume { font-size: 11pt; }
+}

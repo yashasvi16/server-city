@@ -1,0 +1,39 @@
+# Fly.io config. Set `app` to your own app name before `fly launch --copy-config`.
+app = "server-city-CHANGE-ME"
+primary_region = "bom"   # Mumbai; pick the region closest to your visitors
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  ADDR = ":8080"
+  STATIC_DIR = "/site"
+  CLIENT_IP_HEADER = "Fly-Client-IP"   # Fly's edge sets this; never trust it elsewhere
+  DATA_DIR = "/data"
+
+# Guestbook and leaderboard live on this volume: `fly volumes create city_data --size 1`
+[mounts]
+  source = "city_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"    # sleeps when idle; the frontend retries while it wakes
+  auto_start_machines = true
+  min_machines_running = 0
+  [http_service.concurrency]
+    type = "connections"
+    soft_limit = 400
+    hard_limit = 500
+
+  [[http_service.checks]]
+    grace_period = "5s"
+    interval = "30s"
+    method = "GET"
+    path = "/api/health"
+    timeout = "3s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

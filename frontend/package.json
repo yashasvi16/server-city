@@ -1,0 +1,33 @@
+{
+  "name": "server-city-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:single": "tsc --noEmit && vite build --mode single",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "export-scene": "tsx scripts/export-scene.ts",
+    "test": "tsx --test src/game/sim.test.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/unbounded": "^5.3.0",
+    "@fontsource/atkinson-hyperlegible": "^5.3.0",
+    "@fontsource/big-shoulders-display": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "postprocessing": "^6.39.5",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "^4.5.1",
+    "@types/node": "^26.6.6",
+    "@types/three": "^0.186.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vite-plugin-singlefile": "^2.3.4"
+  }
+}

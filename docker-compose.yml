@@ -1,0 +1,31 @@
+# `docker compose up --build` starts the whole site on http://localhost:8080
+services:
+  city:
+    build:
+      context: .
+      args:
+        VERSION: local
+    ports:
+      - "8080:8080"
+    environment:
+      ADDR: ":8080"
+      STATIC_DIR: /site
+      DATA_DIR: /data             # guestbook + leaderboard log (persisted in the volume below)
+      # RUN_SECRET: set a long random string so game tokens survive restarts
+      LOG_LEVEL: info
+      # Frontend served from this same origin, so no CORS origins are needed.
+      # Behind a reverse proxy that sets X-Forwarded-For, uncomment:
+      # CLIENT_IP_HEADER: X-Forwarded-For
+      RATE_RPS: "10"
+      RATE_BURST: "40"
+      WS_MAX_TOTAL: "500"
+      WS_MAX_PER_IP: "4"
+    volumes:
+      - city-data:/data
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+
+volumes:
+  city-data:
