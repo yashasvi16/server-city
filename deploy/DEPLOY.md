@@ -3,7 +3,7 @@
 | Part | Where | Address |
 |---|---|---|
 | Source code | GitHub, public repo `server-city` | `github.com/yashasvi16/server-city` |
-| Website (3D city, resume, game) | Cloudflare Pages: free, no card, unlimited bandwidth | `https://yashasvi-rathore.pages.dev` |
+| Website (3D city, resume, game) | Cloudflare Workers static assets: free, no card | `https://yashasvi-rathore.yashasvi-xvi.workers.dev` |
 | Go backend (live visitors, guestbook, leaderboard, stats) | Render free web service: free, no card | `https://yashasvi-city-api.onrender.com` |
 | Nicer address (later) | is-a.dev: free | `https://yashasvi.is-a.dev` |
 
@@ -51,7 +51,7 @@ If Blueprint is unavailable, create the service by hand: **New → Web Service �
 | Start Command | `./app` |
 | Instance Type | **Free** |
 | Health Check Path (Advanced) | `/api/health` |
-| Environment variables | `ADDR=:10000`, `DATA_DIR=/tmp/server-city`, `ALLOWED_ORIGINS=https://yashasvi-rathore.pages.dev,https://yashasvi.is-a.dev`, `CLIENT_IP_HEADER=X-Forwarded-For:1`, `RUN_SECRET=` (click **Generate**) |
+| Environment variables | `ADDR=:10000`, `DATA_DIR=/tmp/server-city`, `ALLOWED_ORIGINS=https://yashasvi-rathore.yashasvi-xvi.workers.dev,https://yashasvi-rathore.pages.dev,https://yashasvi.is-a.dev`, `CLIENT_IP_HEADER=CF-Connecting-IP`, `RUN_SECRET=` (click **Generate**) |
 
 ## C. Website on Cloudflare Pages (5 minutes)
 
@@ -69,7 +69,7 @@ If Blueprint is unavailable, create the service by hand: **New → Web Service �
    | Build output directory | `dist` |
    | Environment variables | `VITE_API_BASE=https://yashasvi-city-api.onrender.com`, `NO_PRECOMPRESS=1`, `NODE_VERSION=22` |
 
-4. Click **Save and Deploy** and wait about 2 minutes. Then open <https://yashasvi-rathore.pages.dev>. The top bar shows "Waking the server…", then **Live**.
+4. Click **Save and Deploy** and wait about 2 minutes. Then open the address Cloudflare shows. Cloudflare's "Create application" now makes a **Worker** by default, so the address is `https://yashasvi-rathore.yashasvi-xvi.workers.dev`, not `.pages.dev`. Either works, but the address must be listed in `ALLOWED_ORIGINS`. The top bar shows "Waking the server…", then **Live**.
 
 From now on, every push to GitHub redeploys both the website and the backend automatically.
 
@@ -88,7 +88,7 @@ is-a.dev is run by volunteers, and they review requests by hand. Their rules ask
 1. Read <https://docs.is-a.dev>.
 2. Fork <https://github.com/is-a-dev/register> and add `domains/yashasvi.json` with a **CNAME** to `yashasvi-rathore.pages.dev`, following their format.
 3. Open the pull request and watch it in case they ask for changes.
-4. Once it's merged, go to **Pages → yashasvi-rathore → Custom domains** and add `yashasvi.is-a.dev`.
+4. Once it's merged, add `yashasvi.is-a.dev` as a custom domain on a **Pages** project. A Worker can only use custom domains from zones in your own Cloudflare account, so for is-a.dev make a Pages project with **Upload assets** (drag in `release/site`) and point the CNAME at its `.pages.dev` address.
 
 The backend already accepts requests from that address.
 

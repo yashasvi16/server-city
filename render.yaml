@@ -1,6 +1,6 @@
 # Render Blueprint for the Go backend (free plan, no card).
 # Render: New → Blueprint → pick this repo. The website itself is hosted on
-# Cloudflare Pages; see deploy/DEPLOY.md.
+# Cloudflare (Workers static assets); see deploy/DEPLOY.md.
 services:
   - type: web
     name: yashasvi-city-api
@@ -20,9 +20,11 @@ services:
       - key: DATA_DIR
         value: /tmp/server-city
       - key: ALLOWED_ORIGINS
-        value: https://yashasvi-rathore.pages.dev,https://yashasvi.is-a.dev
-      # Render appends its own proxy hop after the visitor's address.
+        value: https://yashasvi-rathore.yashasvi-xvi.workers.dev,https://yashasvi-rathore.pages.dev,https://yashasvi.is-a.dev
+      # Render sits behind Cloudflare, which sets CF-Connecting-IP to the
+      # visitor's address and overwrites any value a client sends.
+      # (Measured: X-Forwarded-For is "visitor, cloudflare-edge, render-internal".)
       - key: CLIENT_IP_HEADER
-        value: "X-Forwarded-For:1"
+        value: CF-Connecting-IP
       - key: RUN_SECRET
         generateValue: true

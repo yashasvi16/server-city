@@ -145,6 +145,9 @@ func TestClientIP(t *testing.T) {
 		{"garbage header", "Fly-Client-IP", "not-an-ip", "10.0.0.1:1", "invalid"},
 		{"xff skip one proxy (Render)", "X-Forwarded-For:1", "6.6.6.6, 7.7.7.7, 10.1.2.3", "10.0.0.1:1", "7.7.7.7"},
 		{"xff skip, spoofed left part ignored", "X-Forwarded-For:1", "1.1.1.1, 9.9.9.9, 7.7.7.7, 10.1.2.3", "10.0.0.1:1", "7.7.7.7"},
+		{"render behind cloudflare: xff skip two", "X-Forwarded-For:2", "6.6.6.6, 104.22.60.146, 10.29.117.6", "10.0.0.1:1", "6.6.6.6"},
+		{"render behind cloudflare: cf header", "CF-Connecting-IP", "6.6.6.6", "10.0.0.1:1", "6.6.6.6"},
+		{"cf header v6 collapsed", "CF-Connecting-IP", "2001:db8:1:2:aaaa::9", "10.0.0.1:1", "2001:db8:1:2::/64"},
 		{"xff skip beyond list falls back to socket", "X-Forwarded-For:3", "7.7.7.7, 10.1.2.3", "1.2.3.4:5", "1.2.3.4"},
 	}
 	for _, tc := range cases {

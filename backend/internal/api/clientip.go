@@ -16,8 +16,9 @@ import (
 // own proxies added is client-controlled. "X-Forwarded-For" takes the
 // right-most entry (one proxy in front of us, e.g. Caddy or Fly). On hosts
 // with more proxies, "X-Forwarded-For:N" skips the N right-most entries
-// first; on Render, which appends its own hop after the visitor's address,
-// that is "X-Forwarded-For:1".
+// first. A header such as "CF-Connecting-IP" is used as is: on Render, which
+// sits behind Cloudflare, that header holds the visitor's address and
+// Cloudflare overwrites any value the client sent.
 //
 // IPv6 addresses are collapsed to their /64 prefix, since a single host
 // typically controls a whole /64 and could otherwise rotate addresses to

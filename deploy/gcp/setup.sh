@@ -8,7 +8,7 @@
 #
 #   api-host         public hostname for the API, e.g. yashasvi-api.duckdns.org
 #   allowed-origins  comma-separated site origins allowed to call it, e.g.
-#                    https://yashasvi-rathore.pages.dev,https://yashasvi.is-a.dev
+#                    https://yashasvi-rathore.yashasvi-xvi.workers.dev,https://yashasvi.is-a.dev
 #   duckdns-token    optional: keeps the DuckDNS name pointed at this VM if
 #                    its IP ever changes (stored only on this VM)
 #
